@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+
+  postgis:
+    image: postgis/postgis:latest
+    environment:
+      POSTGRES_DB: o2p_topo
+      POSTGRES_USER: o2p_topo
+      POSTGRES_PASSWORD: o2p_topo
+    volumes:
+      - o2p_topo_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  osm2pgsql:
+    image: iboates/osm2pgsql:latest
+    environment:
+      PGPASSWORD: o2p_topo
+
+  osm2pgrouting:
+    image: iboates/osm2pgrouting:latest
+    environment:
+      PGPASSWORD: o2p_topo
+
+volumes:
+  o2p_topo_data:
