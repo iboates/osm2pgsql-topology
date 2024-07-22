@@ -44,9 +44,9 @@ create table osm_edges as (
         FROM
             _02_split_edges se
         JOIN
-            nodes n_start ON ST_DWithin(ST_StartPoint(se.split_geom), n_start.geom, 0.00001)
+            osm_nodes n_start ON ST_DWithin(ST_StartPoint(se.split_geom), n_start.geom, 0.00001)
         JOIN
-            nodes n_end ON ST_DWithin(ST_EndPoint(se.split_geom), n_end.geom, 0.00001)
+            osm_nodes n_end ON ST_DWithin(ST_EndPoint(se.split_geom), n_end.geom, 0.00001)
     ),
 
     _04_final_output as (
@@ -69,5 +69,5 @@ create table osm_edges as (
 );
 
 drop table edges_pre;
-alter table osm_edges add column id serial primary key;
+alter table osm_edges add primary key (id);
 create index if not exists edges_geom_idx on osm_edges using gist (geom);

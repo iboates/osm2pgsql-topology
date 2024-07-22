@@ -1,3 +1,27 @@
+PEDESTRIAN_HIGHWAY_TAGS = {
+    'residential',
+    'service',
+    'road',
+    'footway',
+    'path',
+    'pedestrian',
+    'sidewalk',
+    'crossing',
+    'steps',
+    'track',
+    'living_street',
+    'bridleway'
+}
+
+function isInSet(value, set)
+    for _, v in ipairs(set) do
+        if v == value then
+            return true
+        end
+    end
+    return false
+end
+
 local node_tags = osm2pgsql.define_table({
     name = 'node_tags',
     ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
@@ -22,17 +46,17 @@ function osm2pgsql.process_nodes(object)
 end
 
 function osm2pgsql.process_way(object)
-    for k, v in pairs(object.tags) do
-        if k == 'highway' then
-            local s = object.nodes[1]
-            local t = object.nodes[#object.nodes]  -- last node
-            edges:insert({
-                original_source_node_id = s,
-                original_target_node_id = t,
-                tags = object.tags,
-                geom = object:as_linestring()
-            })
-            break
+    if isInSet(object.tags['highway'], PEDESTRIAN_HIGHWAY_TAGS) then
+        if object.tags['area'] == 'yes' then
+            return
         end
+        local s = object.nodes[1]
+        local t = object.nodes[#object.nodes]  -- last node
+        edges:insert({
+        original_source_node_id = s,
+            original_target_node_id = t,
+            tags = object.tags,
+            geom = object:as_linestring()
+        })
     end
 end

@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   postgis:
-    image: postgis/postgis:latest
+    image: pgrouting/pgrouting:latest
     environment:
       POSTGRES_DB: o2p_topo
       POSTGRES_USER: o2p_topo
