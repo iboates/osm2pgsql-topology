@@ -1,32 +1,20 @@
 drop table if exists pgr_res;
-
 create table pgr_res as (
-
-with pgr_res as (
-
---SELECT *
---FROM pgr_dijkstra(
---  'SELECT id,
---          source_node_id as source, target_node_id as target,
---          st_length(geom) AS cost, st_length(geom) AS reverse_cost
---  FROM osm_edges',
---  3948020901, 3577226615,
---  directed => false
---)
-
-SELECT * FROM pgr_kruskalDFS(
-  'SELECT id, source_node_id as source, target_node_id as target,
-  -1 AS cost, st_length(geom) AS reverse_cost
-  from osm_edges',
-  3577226615)
-
-)
-
-select
+  with pgr_res as (
+--    SELECT * FROM pgr_kruskalDFS(
+--      'SELECT id, target_node_id as source, source_node_id as target,
+--      st_length(geom) AS cost
+--      from osm_edges',
+--      2132557864)
+SELECT * FROM pgr_drivingDistance(
+  'SELECT id, target_node_id as source, source_node_id as target,
+  st_length(geom) as cost FROM osm_edges',
+  53275598, 99999999, directed => true)
+  )
+  select
     *
-from
+  from
     osm_edges
-where
+  where
     id in (select edge from pgr_res)
-
-    );
+);
