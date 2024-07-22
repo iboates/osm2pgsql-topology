@@ -18,10 +18,10 @@ services:
     environment:
       PGPASSWORD: o2p_topo
 
-  osm2pgrouting:
-    image: iboates/osm2pgrouting:latest
-    environment:
-      PGPASSWORD: o2p_topo
+#  osm2pgrouting:
+#    image: iboates/osm2pgrouting:latest
+#    environment:
+#      PGPASSWORD: o2p_topo
 
 volumes:
   o2p_topo_data:

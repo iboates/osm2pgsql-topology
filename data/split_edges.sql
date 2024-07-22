@@ -1,6 +1,6 @@
-drop table if exists edges_split;
+drop table if exists osm_edges;
 
-create table edges_split as (
+create table osm_edges as (
 
     with _00_snap_nodes as (
         select
@@ -8,8 +8,8 @@ create table edges_split as (
             edges.osm_id as snapped_to_edge_osm_id,
             nodes.geom as original_geom
         from
-            nodes,
-            edges
+            osm_nodes as nodes,
+            edges_pre as edges
         where
             ST_DWithin(nodes.geom, edges.geom, 0.00001)
     ),
@@ -30,7 +30,7 @@ create table edges_split as (
             (ST_Dump(ST_Split(edges.geom, nodes.geom))).geom AS split_geom,
             edges.*
         FROM
-            edges,
+            edges_pre as edges,
             _01_group_snapped_nodes_by_edge_osm_id as nodes
         WHERE
             nodes.snapped_to_edge_osm_id = edges.osm_id
@@ -60,6 +60,14 @@ create table edges_split as (
             _03_join_nodes_to_splitted_edges
     )
 
-    select * from _04_final_output
+    select
+        row_number() over () as id,
+        *
+    from
+        _04_final_output
 
-)
+);
+
+drop table edges_pre;
+alter table osm_edges add column id serial primary key;
+create index if not exists edges_geom_idx on osm_edges using gist (geom);

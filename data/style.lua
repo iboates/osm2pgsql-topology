@@ -7,7 +7,7 @@ local node_tags = osm2pgsql.define_table({
 })
 
 local edges = osm2pgsql.define_table({
-    name = 'edges',
+    name = 'edges_pre',
     ids = { type = 'any', id_column = 'osm_id', type_column = 'osm_type' },
     columns = {
         { column = 'original_source_node_id', type = 'bigint' },
