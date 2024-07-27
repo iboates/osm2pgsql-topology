@@ -10,18 +10,32 @@ services:
       POSTGRES_PASSWORD: o2p_topo
     volumes:
       - o2p_topo_data:/var/lib/postgresql/data
+      - ./mnt:/mnt
     ports:
       - "5432:5432"
+
+  osmium:
+    image: iboates/osmium:latest
+    volumes:
+      - ./mnt:/mnt
 
   osm2pgsql:
     image: iboates/osm2pgsql:latest
     environment:
       PGPASSWORD: o2p_topo
+    volumes:
+      - ./mnt:/mnt
 
-#  osm2pgrouting:
-#    image: iboates/osm2pgrouting:latest
-#    environment:
-#      PGPASSWORD: o2p_topo
+  osm2pgrouting:
+    image: iboates/osm2pgrouting:latest
+    volumes:
+      - ./mnt:/mnt
+
+  benchmark:
+    build:
+      context: benchmark
+    volumes:
+      - ./mnt:/mnt
 
 volumes:
   o2p_topo_data:
