@@ -12,6 +12,17 @@ create table ways_vertices_pgr as (
 
     select
         id,
+        id as osm_id,
+        ST_X(ST_SetSRID(ST_MakePoint(lon / 10000000.0, lat / 10000000.0), 4326)) as lon,
+        ST_Y(ST_SetSRID(ST_MakePoint(lon / 10000000.0, lat / 10000000.0), 4326)) as lat,
+
+        -- These fields seem to be for storing topological connectivity information but they are always empty
+        -- when using osm2pgrouting, just keep them for legacy compatibility
+        null as eout,
+        null as cnt,
+        null as chk,
+        null as ein,
+
         ST_SetSRID(ST_MakePoint(lon / 10000000.0, lat / 10000000.0), 4326) as the_geom
     from
         planet_osm_nodes n
