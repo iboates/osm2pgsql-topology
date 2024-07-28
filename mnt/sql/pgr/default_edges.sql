@@ -111,6 +111,6 @@ create table ways as (
 
 );
 
-drop table edges_pre;
-alter table ways add primary key (gid);
-create index if not exists ways_geom_idx on ways using gist (the_geom);
+--drop table edges_pre;
+--alter table ways add primary key (gid);
+--create index if not exists ways_geom_idx on ways using gist (the_geom);

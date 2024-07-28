@@ -92,15 +92,6 @@ function parseOneWayToInteger(str)
     end
 end
 
--- function isInSet(value, set)
---     for _, v in ipairs(set) do
---         if v == value then
---             return true
---         end
---     end
---     return false
--- end
-
 function isInSet(value, set)
     return set[value] ~= nil
 end
@@ -125,6 +116,14 @@ function handleMaxSpeed(tags)
     return out
 end
 
+function get_middle_elements(t)
+    local middle_elements = {}
+    for i = 2, #t - 1 do
+        table.insert(middle_elements, t[i])
+    end
+    return middle_elements
+end
+
 local node_tags = osm2pgsql.define_table({
     name = 'node_tags',
     ids = { type = 'any', id_column = 'osm_id' },
@@ -147,6 +146,7 @@ local edges = osm2pgsql.define_table({
         { column = 'maxspeed_backward', type = 'integer' },
         { column = 'priority', type = 'integer' },
         { column = 'tags', type = 'json' },
+        { column = 'internal_node_ids', sql_type = 'text' },
         { column = 'geom', type = 'linestring', projection = 4326, not_null = true },
     }
 })
@@ -184,6 +184,7 @@ function osm2pgsql.process_way(object)
         maxspeed_backward = maxspeed.maxspeed_backward,
         priority = 0,
         tags = object.tags,
+        internal_node_ids = table.concat(get_middle_elements(object.nodes), ","),
         geom = object:as_linestring()
     })
 
