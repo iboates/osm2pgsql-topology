@@ -128,7 +128,7 @@ Here is an example of a single benchmark trial where this implementation gave ex
 
 Here is an example of a single benchmark trial where this implementation gave a similar, but ultimately different result:
 
-![assets/img/osm2pgr_ok.png](assets/img/osm2pgr_good.png)
+![assets/img/osm2pgr_ok.png](assets/img/osm2pgr_ok.png)
 
 Here is an example of a single benchmark trial where this implementation gave a very different result:
 
