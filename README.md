@@ -35,7 +35,7 @@ docker compose run --rm osm2pgsql \
   -H postgis \
   -P 5432 \
   -O flex \
-  -S /mnt/style/style_power.lua \
+  -S /mnt/style/style_pedestrian.lua \
   /mnt/data.osm.pbf
 docker compose exec postgis psql -d o2p_topo -U o2p_topo -f /mnt/sql/create_nodes_table.sql
 docker compose exec postgis psql -d o2p_topo -U o2p_topo -f /mnt/sql/create_edges_table.sql
