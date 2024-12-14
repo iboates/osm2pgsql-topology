@@ -35,7 +35,7 @@ docker compose run --rm osm2pgsql \
   -H postgis \
   -P 5432 \
   -O flex \
-  -S /mnt/style/style_pedestrian.lua \
+  -S /mnt/style/style_power.lua \
   /mnt/data.osm.pbf
 docker compose exec postgis psql -d o2p_topo -U o2p_topo -f /mnt/sql/create_nodes_table.sql
 docker compose exec postgis psql -d o2p_topo -U o2p_topo -f /mnt/sql/create_edges_table.sql
@@ -80,7 +80,27 @@ changed it in the SQL file):
 
 ![assets/img/watershed.png](assets/img/watershed.png)
 
-## Example 3 (work in progress): Replacement for osm2pgrouting
+## Example 3: Power lines
+
+```sh
+wget -O mnt/data.osm.pbf https://download.geofabrik.de/europe/andorra-latest.osm.pbf
+docker compose up -d
+docker compose run --rm osm2pgsql \
+  -s \
+  -d o2p_topo \
+  -U o2p_topo \
+  -H postgis \
+  -P 5432 \
+  -O flex \
+  -S /mnt/style/style_waterways.lua \
+  /mnt/data.osm.pbf
+docker compose exec postgis psql -d o2p_topo -U o2p_topo -f /mnt/sql/create_nodes_table.sql
+docker compose exec postgis psql -d o2p_topo -U o2p_topo -f /mnt/sql/create_edges_table.sql
+```
+
+You now have a topologically intact map of power lines.
+
+## Example 4 (work in progress): Replacement for osm2pgrouting
 
 [osm2pgrouting](https://pgrouting.org/docs/tools/osm2pgrouting.html) is a pretty much dead project at this point and I
 thought that maybe it could be resurrected using osm2pgsql. I have tried to wrangle the OSM .pbf data into the exact
