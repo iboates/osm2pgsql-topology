@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
 
   postgis:
@@ -35,7 +33,7 @@ services:
     build:
       context: benchmark
     volumes:
-      - ./mnt:/mnt
+      - ./benchmark/benchmark.py:/benchmark.py
 
 volumes:
   o2p_topo_data:
