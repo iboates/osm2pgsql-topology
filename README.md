@@ -47,7 +47,8 @@ You now have a topologically intact network of walkable OSM ways:
 
 ## Example 2: Waterway mapping
 
-Inspired by the presentation by Amanda McCann at the State of the Map Europe 2024 conference.
+Inspired by the presentation by Amanda McCann about [Waterwaymap.org](https://github.com/amandasaurus/waterwaymap.org)
+at the State of the Map Europe 2024 conference.
 
 You can create a waterway network using the style file at `./mnt/style/style_waterways.lua`:
 
