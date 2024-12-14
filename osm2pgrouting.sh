@@ -16,8 +16,6 @@ docker compose exec postgis \
   -U o2p_topo \
   -c "create schema if not exists osm2pgr;"
 
-docker compose run --rm -v $(pwd)/data:/data osmium cat $PBF_FILE -o /mnt/data.osm --overwrite
-
 docker compose run --rm -v $(pwd)/data:/data osm2pgrouting \
   -c /usr/share/osm2pgrouting/mapconfig.xml \
   -d o2p_topo \
