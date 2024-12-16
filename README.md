@@ -102,12 +102,14 @@ You now have a topologically intact map of power lines.
 
 ## Example 4 (work in progress): Replacement for osm2pgrouting
 
-[osm2pgrouting](https://pgrouting.org/docs/tools/osm2pgrouting.html) is a pretty much dead project at this point and I
-thought that maybe it could be resurrected using osm2pgsql. I have tried to wrangle the OSM .pbf data into the exact
-same output as running osm2pgrouting on an equivalent .osm file. I think it is like 90% there but not quite a perfect
-drop-in replacement.
+When I starting working on this, [osm2pgrouting](https://pgrouting.org/docs/tools/osm2pgrouting.html) seemed like it
+was losing a lot of momentumand I thought that maybe it could be resurrected using osm2pgsql. I have tried to wrangle
+the OSM .pbf data into the exact same output as running osm2pgrouting on an equivalent .osm file. I think it is like
+90% there but not quite a perfect drop-in replacement.
 
-If you want to give it a try, execute this
+It seems, however, that recently osm2pgrouting is being worked on again, and so maybe all of the this is moot.
+
+If you want to give it a try anyway, execute this
 
 ```sh
 docker compose up -d
